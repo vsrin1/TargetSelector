@@ -1,13 +1,17 @@
 import point
 
+"""Method that gets a the centroid for a given list of targets"""
 def get_fov_center_point(targets):
     return point.Point(sum([t.right_ascension for t in targets]) / len(targets), sum([t.declination - 90 for t in targets]) / len(targets))
 
+"""Method that returns a tuple containing the most targets within the FOV of the given
+radius of the input target that also includes the input target"""
 def get_most_targets_fov(radius, target):
     targets = max(target.points_in_fov[radius], key=lambda x: len(x))
     targets.append(target)
     return (get_fov_center_point(targets), targets)
 
+"""Method that creates a list of FOVNodes from the given radius and the targets"""
 def get_nodes(radius, targets):
     nodes = []
     while targets:
@@ -24,6 +28,8 @@ def get_nodes(radius, targets):
                 j.adjacency_list.append((i, j.euclidean_distance(i)))
     return nodes
 
+"""Method that returns an ordered list that gives the optimal observation path,
+currently based on the FOVNode, which gives the greatest targets for the its distance"""
 def get_optimal_path(nodes):
     nodes = sorted(nodes, key=lambda x: len(x.targets))
     ordered_nexts = []
