@@ -37,5 +37,3 @@ def run_test(radius, number_targets):
                 i.add_target_if_fov(radius, j)
 
     path = tg.get_optimal_path(tg.get_nodes(radius, targets))
-
-    print(check_if_path_correct(path, targets, radius))
